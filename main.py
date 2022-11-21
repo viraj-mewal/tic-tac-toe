@@ -18,6 +18,7 @@ class Game:
             [3, 5, 7]
         ]
         self.win = Tk()
+        # self.win.configure(bg="black")
         self.win.title("Tic Tac Toe")
         self.bindings()
         self.scoreO, self.scoreX = 0, 0
@@ -52,6 +53,10 @@ class Game:
         self.vs.grid(row=0, column=1)
         self.playerX.grid(row=0, column=2)
 
+        # turn
+        self.turnDisplay = Label(self.win, text=f"O turn", font=("Comic Sans MS", 25), bg="black", fg="white", width=15)
+        self.turnDisplay.grid(row=4, column=0, columnspan=3, sticky="news", pady=1)
+
     def changeText(self, i):
         value = self.btnDict[f"b{i}"].cget('text')
         if value == " ":
@@ -59,11 +64,11 @@ class Game:
 
             # check win
             if self.checkWin():
-                messagebox.showinfo("Win", f"{self.turn} won the game !")
                 if self.turn == "X": self.scoreX += 1
                 elif self.turn == "O": self.scoreO += 1
                 self.playerO.config(text=f"O : {self.scoreO}")
                 self.playerX.config(text=f"X : {self.scoreX}")
+                messagebox.showinfo("Win", f"{self.turn} won the game !")
 
                 # check main win
                 if self.scoreO == self.limit or self.scoreX == self.limit:
@@ -87,8 +92,10 @@ class Game:
 
                 # reset
                 self.reset()
+                
             # change turn
             self.turn = "O" if self.turn == "X" else "X"
+            self.turnDisplay.config(text=f"{self.turn} turn")
 
         else:
             messagebox.showerror("Error", "Box is already filled !")
@@ -126,3 +133,5 @@ class Game:
 
 if __name__ == "__main__":
     Game()
+
+############# add change turn panel ############### Ok
